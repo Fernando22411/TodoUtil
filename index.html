@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TodoUtil — Herramientas online gratuitas</title>
+<meta name="description" content="TodoUtil: herramientas online gratuitas para cálculos, conversiones, fechas y tareas cotidianas.">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f5f7fb;color:#172033}
+header{background:linear-gradient(135deg,#3157d5,#6b4fd8);color:#fff;padding:34px 20px 48px}
+.wrap{max-width:1120px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:20px}.brand{font-size:34px;font-weight:850}.tag{opacity:.9;margin-top:5px}
+.search{margin-top:25px;background:#fff;border:0;border-radius:14px;padding:15px 18px;width:100%;font-size:16px;box-shadow:0 8px 30px #17203320}
+main{padding:30px 20px}.cats{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:22px}.cat{border:1px solid #d9deea;background:#fff;padding:9px 13px;border-radius:999px;cursor:pointer}.cat.active{background:#3157d5;color:#fff;border-color:#3157d5}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}.card{background:#fff;border-radius:18px;padding:21px;box-shadow:0 7px 24px #17203310}.card h2{margin:0 0 7px;font-size:19px}.card p{margin:0 0 14px;color:#667085;min-height:42px}
+label{display:block;margin:10px 0 5px;font-weight:650}input,select{width:100%;padding:11px;border:1px solid #d7dce7;border-radius:10px;font-size:16px;background:#fff}
+button{border:0;border-radius:10px;padding:11px 15px;background:#3157d5;color:white;font-weight:700;cursor:pointer;margin-top:12px}.result{margin-top:12px;padding:11px;background:#eef2ff;border-radius:10px;font-weight:750;line-height:1.4}
+footer{text-align:center;padding:38px 20px;color:#667085}
+@media(max-width:600px){.brand{font-size:29px}header{padding-top:27px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="top"><div><div class="brand">TodoUtil</div><div class="tag">Herramientas online gratuitas, simples y rápidas.</div></div></div>
+<input class="search" id="search" oninput="filterTools()" placeholder="🔎 Buscar una herramienta..."></div></header>
+<main class="wrap">
+<div class="cats">
+<button class="cat active" onclick="cat('Todas',this)">Todas</button>
+<button class="cat" onclick="cat('Dinero',this)">💰 Dinero</button>
+<button class="cat" onclick="cat('Matemática',this)">🧮 Matemática</button>
+<button class="cat" onclick="cat('Conversores',this)">🔄 Conversores</button>
+<button class="cat" onclick="cat('Tiempo',this)">📅 Tiempo</button>
+</div>
+<div class="grid" id="grid">
+
+<section class="card tool" data-cat="Matemática" data-name="porcentaje"><h2>🧮 Porcentajes</h2><p>Calculá un porcentaje de cualquier número.</p><label>Porcentaje (%)</label><input id="pct" type="number" placeholder="15"><label>Número</label><input id="base" type="number" placeholder="80000"><button onclick="porcentaje()">Calcular</button><div id="r1"></div></section>
+
+<section class="card tool" data-cat="Dinero" data-name="descuento"><h2>🏷️ Descuentos</h2><p>Calculá el precio final después de un descuento.</p><label>Precio</label><input id="price" type="number" placeholder="100000"><label>Descuento (%)</label><input id="disc" type="number" placeholder="20"><button onclick="descuento()">Calcular</button><div id="r2"></div></section>
+
+<section class="card tool" data-cat="Dinero" data-name="propina"><h2>🍽️ Propina</h2><p>Calculá propina y total de una cuenta.</p><label>Total de la cuenta</label><input id="bill" type="number" placeholder="25000"><label>Propina (%)</label><input id="tip" type="number" value="10"><button onclick="propina()">Calcular</button><div id="r3"></div></section>
+
+<section class="card tool" data-cat="Tiempo" data-name="edad"><h2>🎂 Edad</h2><p>Calculá tu edad a partir de tu fecha de nacimiento.</p><label>Fecha de nacimiento</label><input id="birth" type="date"><button onclick="edad()">Calcular</button><div id="r4"></div></section>
+
+<section class="card tool" data-cat="Tiempo" data-name="diferencia fechas"><h2>📅 Diferencia entre fechas</h2><p>Calculá cuántos días hay entre dos fechas.</p><label>Fecha inicial</label><input id="date1" type="date"><label>Fecha final</label><input id="date2" type="date"><button onclick="diffDates()">Calcular</button><div id="r5"></div></section>
+
+<section class="card tool" data-cat="Matemática" data-name="regla de tres"><h2>🔢 Regla de tres</h2><p>Resolvé proporciones de forma rápida.</p><label>A</label><input id="ra" type="number" placeholder="5"><label>B</label><input id="rb" type="number" placeholder="20"><label>C</label><input id="rc" type="number" placeholder="8"><button onclick="regla()">Calcular X</button><div id="r6"></div></section>
+
+<section class="card tool" data-cat="Matemática" data-name="area rectangulo"><h2>📐 Área de rectángulo</h2><p>Calculá el área de un rectángulo.</p><label>Largo</label><input id="len" type="number" placeholder="10"><label>Ancho</label><input id="wid" type="number" placeholder="5"><button onclick="areaRect()">Calcular</button><div id="r7"></div></section>
+
+<section class="card tool" data-cat="Matemática" data-name="area triangulo"><h2>🔺 Área de triángulo</h2><p>Calculá el área con base y altura.</p><label>Base</label><input id="triB" type="number" placeholder="10"><label>Altura</label><input id="triH" type="number" placeholder="6"><button onclick="areaTri()">Calcular</button><div id="r8"></div></section>
+
+<section class="card tool" data-cat="Conversores" data-name="kg libras"><h2>⚖️ Kg ↔ lb</h2><p>Convertí kilogramos y libras.</p><label>Valor</label><input id="kgv" type="number" placeholder="10"><select id="kgdir"><option value="k2l">Kg → lb</option><option value="l2k">lb → Kg</option></select><button onclick="kgLb()">Convertir</button><div id="r9"></div></section>
+
+<section class="card tool" data-cat="Conversores" data-name="cm pulgadas"><h2>📏 Cm ↔ pulgadas</h2><p>Convertí centímetros y pulgadas.</p><label>Valor</label><input id="cmv" type="number" placeholder="10"><select id="cmdir"><option value="c2i">Cm → pulgadas</option><option value="i2c">Pulgadas → cm</option></select><button onclick="cmIn()">Convertir</button><div id="r10"></div></section>
+
+<section class="card tool" data-cat="Conversores" data-name="temperatura"><h2>🌡️ Celsius ↔ Fahrenheit</h2><p>Convertí temperaturas rápidamente.</p><label>Valor</label><input id="temp" type="number" placeholder="25"><select id="tdir"><option value="c2f">Celsius → Fahrenheit</option><option value="f2c">Fahrenheit → Celsius</option></select><button onclick="temperatura()">Convertir</button><div id="r11"></div></section>
+
+<section class="card tool" data-cat="Dinero" data-name="monedas"><h2>💱 Conversor de monedas</h2><p>Módulo preparado para cotizaciones actualizadas.</p><label>Monto</label><input id="money" type="number" placeholder="1000"><label>Moneda origen</label><select id="from"><option>ARS</option><option>USD</option><option>EUR</option></select><label>Moneda destino</label><select id="to"><option>USD</option><option>ARS</option><option>EUR</option></select><button onclick="moneyDemo()">Convertir</button><div id="r12"></div></section>
+
+</div></main>
+<footer>© 2026 TodoUtil · Herramientas gratuitas para todos.</footer>
+<script>
+const n=x=>Number(x); const fmt=x=>x.toLocaleString('es-AR',{maximumFractionDigits:2});
+function show(id,t){document.getElementById(id).innerHTML='<div class="result">'+t+'</div>'}
+function porcentaje(){let p=n(pct.value),b=n(base.value);show('r1',isFinite(p)&&isFinite(b)?`${fmt(p)}% de ${fmt(b)} = ${fmt(p*b/100)}`:'Completá los campos.')}
+function descuento(){let x=n(price.value),d=n(disc.value);show('r2',isFinite(x)&&isFinite(d)?`Precio final: ${fmt(x*(1-d/100))}`:'Completá los campos.')}
+function propina(){let x=n(bill.value),p=n(tip.value);show('r3',isFinite(x)&&isFinite(p)?`Propina: ${fmt(x*p/100)}<br>Total: ${fmt(x*(1+p/100))}`:'Completá los campos.')}
+function edad(){if(!birth.value)return show('r4','Elegí una fecha.');let b=new Date(birth.value+'T00:00:00'),t=new Date(),a=t.getFullYear()-b.getFullYear();if(t<new Date(t.getFullYear(),b.getMonth(),b.getDate()))a--;show('r4',`Edad: ${a} años`)}
+function diffDates(){if(!date1.value||!date2.value)return show('r5','Elegí ambas fechas.');let a=new Date(date1.value+'T00:00:00'),b=new Date(date2.value+'T00:00:00');show('r5',`Diferencia: ${Math.abs(Math.round((b-a)/86400000)).toLocaleString('es-AR')} días`)}
+function regla(){let a=n(ra.value),b=n(rb.value),c=n(rc.value);show('r6',isFinite(a)&&isFinite(b)&&isFinite(c)&&a!==0?`X = ${fmt(b*c/a)}`:'Completá correctamente los campos.')}
+function areaRect(){let l=n(len.value),w=n(wid.value);show('r7',isFinite(l)&&isFinite(w)?`Área: ${fmt(l*w)} unidades²`:'Completá los campos.')}
+function areaTri(){let b=n(triB.value),h=n(triH.value);show('r8',isFinite(b)&&isFinite(h)?`Área: ${fmt(b*h/2)} unidades²`:'Completá los campos.')}
+function kgLb(){let v=n(kgv.value),r=kgdir.value;show('r9',isFinite(v)?`${fmt(v)} ${r==='k2l'?'kg = '+fmt(v*2.2046226218)+' lb':'lb = '+fmt(v/2.2046226218)+' kg'}`:'Completá el valor.')}
+function cmIn(){let v=n(cmv.value),r=cmdir.value;show('r10',isFinite(v)?`${fmt(v)} ${r==='c2i'?'cm = '+fmt(v/2.54)+' pulgadas':'pulgadas = '+fmt(v*2.54)+' cm'}`:'Completá el valor.')}
+function temperatura(){let v=n(temp.value),r=tdir.value;show('r11',isFinite(v)?`${fmt(v)}° = ${fmt(r==='c2f'?v*9/5+32:(v-32)*5/9)}°`:'Completá el valor.')}
+function moneyDemo(){show('r12','Las cotizaciones en vivo se conectarán antes de publicar esta herramienta. No usamos valores inventados.')}
+function cat(c,el){document.querySelectorAll('.cat').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.querySelectorAll('.tool').forEach(x=>x.style.display=(c==='Todas'||x.dataset.cat===c)?'block':'none')}
+function filterTools(){let q=search.value.toLowerCase();document.querySelectorAll('.tool').forEach(x=>x.style.display=x.innerText.toLowerCase().includes(q)?'block':'none')}
+</script>
+</body></html>
